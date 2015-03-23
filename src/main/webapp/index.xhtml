@@ -1,0 +1,110 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<h:head>
+</h:head>
+<h:body>
+
+	<p:growl id="message" />
+
+	<p:dataTable value="#{userController.users}" var="user" id="userTable">
+		<p:column headerText="Name">
+		#{user.name}
+		</p:column>
+		<p:column headerText="Surname">
+		#{user.surname}
+		</p:column>
+		<p:column headerText="Tel">
+		#{user.tel}
+		</p:column>
+		<p:column headerText="Edit | Delete">
+			<h:form>
+				<p:commandButton value="Edit"
+					action="#{userController.setUser(user)}" update=":userForm"
+					oncomplete="PF('userDialog').show()" resetValues="true" />
+				<p:commandButton value="Delete"
+					action="#{userController.delete(user)}"
+					update=":userTable ,:message">
+					<p:confirm header="Confirmation" message=" are you sure ?"
+						icon="ui-icon-alert" />
+				</p:commandButton>
+
+
+				<p:confirmDialog global="true">
+					<p:commandButton value="Yes" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="No" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+
+
+			</h:form>
+		</p:column>
+	</p:dataTable>
+
+	<h:form>
+		<p:commandButton action="#{userController.clear()}" update=":userForm"
+			oncomplete="PF('userDialog').show()" value="new User"
+			resetValues="true" />
+	</h:form>
+
+	<p:dialog widgetVar="userDialog" modal="true" closeOnEscape="true">
+		<h:form id="userForm">
+			<p:focus />
+			<p:messages showDetail="true" />
+			<p:panelGrid columns="2">
+ 			name : 
+ 			<p:inputText value="#{userController.user.name}" />
+ 			surname :
+ 			<p:inputText value="#{userController.user.surname}" />
+ 			tel :
+ 			<p:inputMask value="#{userController.user.tel}"
+					mask="(999) 999-9999" />
+				<p:captcha label="Captcha" language="tr" theme="white"
+					required="true" requiredMessage="Please Enter Capcha Text"
+					validatorMessage="Captcha text does not match." />
+			</p:panelGrid>
+
+			<p:commandButton ajax="false" value="save"
+				action="#{userController.save()}"
+				update="userForm , :userTable :message"
+				oncomplete="dialogSubmit(args,'userDialog')" />
+		</h:form>
+	</p:dialog>
+
+	<script type="text/javascript">
+		function dialogSubmit(args , dialogName){
+			if(!args.validationFailed){
+				PF(dialogName).hide();
+				}
+			}
+ 		
+ 	</script>
+
+	<p:ajaxStatus>
+		<f:facet name="error">
+			<h:outputText value="Error" />
+		</f:facet>
+		<f:facet name="success">
+			<h:outputText value="Success" />
+		</f:facet>
+		<f:facet name="default">
+			<h:outputText value="Idle" />
+		</f:facet>
+		<f:facet name="start">
+			<h:outputText value="Sending" />
+		</f:facet>
+		<f:facet name="complete">
+			<h:outputText value="Done" />
+		</f:facet>
+	</p:ajaxStatus>
+
+
+</h:body>
+
+
+
+</html>
