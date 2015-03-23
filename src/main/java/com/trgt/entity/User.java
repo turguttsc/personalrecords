@@ -22,8 +22,7 @@ public class User {
 	 @Size(min=2, message ="Surname cannot be null")
 	 private String surname ;
 	 
-	 private String tel ;
-
+	 private String phoneNum ;
 
 	public String getId() {
 		return id;
@@ -49,12 +48,13 @@ public class User {
 		this.surname = surname;
 	}
 
-	public String getTel() {
-		return tel;
+	public String getPhoneNum() {
+		return phoneNum;
 	}
 
-	public void setTel(String tel) {
-		this.tel = tel;
-	}	 
-	  
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
+	}
+
+	
 }

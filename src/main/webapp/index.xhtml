@@ -2,23 +2,22 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
-
-<script src='https://www.google.com/recaptcha/api.js'></script>
 <h:head>
+
 </h:head>
 <h:body>
 
 	<p:growl id="message" />
-
-	<p:dataTable value="#{userController.users}" var="user" id="userTable">
+	<h:outputText value="PERSONAL RECORDS" />
+	<p:dataTable  value="#{userController.users}" var="user" id="userTable">
 		<p:column headerText="Name">
-		#{user.name}
+			<h:outputText value="#{user.name}" />
 		</p:column>
 		<p:column headerText="Surname">
-		#{user.surname}
+			<h:outputText value="#{user.surname}" />
 		</p:column>
-		<p:column headerText="Tel">
-		#{user.tel}
+			<p:column headerText="phoneNum">
+		<h:outputText value="#{user.phoneNum}" />
 		</p:column>
 		<p:column headerText="Edit | Delete">
 			<h:form>
@@ -28,19 +27,14 @@
 				<p:commandButton value="Delete"
 					action="#{userController.delete(user)}"
 					update=":userTable ,:message">
-					<p:confirm header="Confirmation" message=" are you sure ?"
-						icon="ui-icon-alert" />
+					<p:confirm header="Confirmation" message=" are you sure ?" />
 				</p:commandButton>
-
-
 				<p:confirmDialog global="true">
 					<p:commandButton value="Yes" type="button"
 						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
 					<p:commandButton value="No" type="button"
 						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 				</p:confirmDialog>
-
-
 			</h:form>
 		</p:column>
 	</p:dataTable>
@@ -52,55 +46,58 @@
 	</h:form>
 
 	<p:dialog widgetVar="userDialog" modal="true" closeOnEscape="true">
-		<h:form id="userForm">
-			<p:focus />
-			<p:messages showDetail="true" />
-			<p:panelGrid columns="2">
- 			name : 
+	
+	<h:form id ="userForm" >
+	 		<p:focus />
+			<p:messages/>	
+			<p:panelGrid  columns="2">
+ 			<h:outputText value="Name" />
  			<p:inputText value="#{userController.user.name}" />
- 			surname :
+ 			<h:outputText value="Surname" />
  			<p:inputText value="#{userController.user.surname}" />
- 			tel :
- 			<p:inputMask value="#{userController.user.tel}"
+ 			<h:outputText value="PhoneNum" />
+ 			<p:inputMask value="#{userController.user.phoneNum}"
 					mask="(999) 999-9999" />
-				<p:captcha label="Captcha" language="tr" theme="white"
-					required="true" requiredMessage="Please Enter Capcha Text"
-					validatorMessage="Captcha text does not match." />
+			<p:captcha label="Captcha" theme="white" required="true"
+       		 requiredMessage="Captcha is required." validatorMessage="Captcha text did not match." secure="true"/>
+			
 			</p:panelGrid>
-
-			<p:commandButton ajax="false" value="save"
+		
+			<p:commandButton  value="save"
 				action="#{userController.save()}"
 				update="userForm , :userTable :message"
-				oncomplete="dialogSubmit(args,'userDialog')" />
+				oncomplete="dialogSubmit(args,'userDialog')"/>
+				
+
 		</h:form>
 	</p:dialog>
 
-	<script type="text/javascript">
-		function dialogSubmit(args , dialogName){
-			if(!args.validationFailed){
+ 	<script type="text/javascript">
+ 		function dialogSubmit(args , dialogName){
+ 			if(!args.validationFailed){
 				PF(dialogName).hide();
-				}
+ 				}
 			}
  		
- 	</script>
+	</script> 
 
-	<p:ajaxStatus>
-		<f:facet name="error">
-			<h:outputText value="Error" />
-		</f:facet>
-		<f:facet name="success">
-			<h:outputText value="Success" />
-		</f:facet>
-		<f:facet name="default">
-			<h:outputText value="Idle" />
-		</f:facet>
-		<f:facet name="start">
-			<h:outputText value="Sending" />
-		</f:facet>
-		<f:facet name="complete">
-			<h:outputText value="Done" />
-		</f:facet>
-	</p:ajaxStatus>
+<p:ajaxStatus>
+	<f:facet name="error">
+	<h:outputText value="Error" />
+	</f:facet>
+	<f:facet name="success">
+	<h:outputText value="Success" />
+	</f:facet>
+	<f:facet name="default">
+	<h:outputText value="Idle" />
+	</f:facet>
+	<f:facet name="start">
+	<h:graphicImage library="primefaces" name="jquery/ui/ui-anim_basic_16x16.gif"/>
+	</f:facet>
+	<f:facet name="complete">
+	<h:outputText value="Done" />
+	</f:facet>
+</p:ajaxStatus>
 
 
 </h:body>
