@@ -2,13 +2,12 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
-<h:head>
 
+<h:head>
 </h:head>
 <h:body>
-
 	<p:growl id="message" />
-	<h:outputText value="PERSONAL RECORDS" />
+	<h:outputText value="PERSONAL RECORDS"  />
 	<p:dataTable  value="#{userController.users}" var="user" id="userTable">
 		<p:column headerText="Name">
 			<h:outputText value="#{user.name}" />
@@ -59,7 +58,7 @@
  			<p:inputMask value="#{userController.user.phoneNum}"
 					mask="(999) 999-9999" />
 			<p:captcha label="Captcha" theme="white" required="true"
-       		 requiredMessage="Captcha is required." validatorMessage="Captcha text did not match." secure="true"/>
+       		 requiredMessage="Captcha is required." validatorMessage="Captcha text did not match." />
 			
 			</p:panelGrid>
 		
@@ -92,7 +91,7 @@
 	<h:outputText value="Idle" />
 	</f:facet>
 	<f:facet name="start">
-	<h:graphicImage library="primefaces" name="jquery/ui/ui-anim_basic_16x16.gif"/>
+	<p:graphicImage  value="/images/ajax-loader.gif" />
 	</f:facet>
 	<f:facet name="complete">
 	<h:outputText value="Done" />
@@ -101,7 +100,4 @@
 
 
 </h:body>
-
-
-
 </html>
