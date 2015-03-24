@@ -21,6 +21,7 @@ public class initDbService {
 	@Autowired
 	private MongoTemplate mongoTemplate;
 	
+	
 	@PostConstruct
 	public void init(){
 		
